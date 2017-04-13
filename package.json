@@ -1,0 +1,192 @@
+{
+  "name": "cslint-loader",
+  "version": "0.0.1",
+  "author": "Allan Bazinet @allan_bazinet",
+  "description": "CoffeeLint loader for webpack",
+  "license": "MIT",
+  "maintainers": [
+    "Allan Bazinet <allan.bazinet@gmail.com>"
+  ],
+  "files": [
+    "lib"
+  ],
+  "main": "lib/index.js",
+  "engines": {
+    "node": ">=4"
+  },
+  "dependencies": {
+    "async": "^1.x",
+    "coffeelint": "^1.16.0",
+    "coffeelint-stylish": "^0.1.2",
+    "lodash": "^4.x",
+    "loader-utils": "^1.1.0"
+  },
+  "devDependencies": {
+    "coffee-script": "1.12.5",
+    "coffeelint-internal-variable-names-usage": "0.0.1",
+    "coffeelint-no-implicit-returns": "0.0.6",
+    "coffeescope2": "0.4.5"
+  },
+  "peerDependencies": {
+    "webpack": "2"
+  },
+  "scripts": {
+    "build": "coffee --bare -o lib/ -c src/",
+    "lint": "coffeelint src"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bazineta/cslint-loader"
+  },
+  "coffeelintConfig": {
+    "arrow_spacing": {
+      "level": "warn"
+    },
+    "braces_spacing": {
+      "level": "ignore",
+      "spaces": 0
+    },
+    "camel_case_classes": {
+      "level": "error"
+    },
+    "coffeescript_error": {
+      "level": "error"
+    },
+    "colon_assignment_spacing": {
+      "level": "ignore",
+      "spacing": {
+        "left": 0,
+        "right": 0
+      }
+    },
+    "cyclomatic_complexity": {
+      "value": 10,
+      "level": "ignore"
+    },
+    "duplicate_key": {
+      "level": "error"
+    },
+    "empty_constructor_needs_parens": {
+      "level": "warn"
+    },
+    "ensure_comprehensions": {
+      "level": "warn"
+    },
+    "eol_last": {
+      "level": "warn"
+    },
+    "indentation": {
+      "value": 2,
+      "level": "error"
+    },
+    "line_endings": {
+      "level": "warn",
+      "value": "unix"
+    },
+    "max_line_length": {
+      "level": "ignore"
+    },
+    "missing_fat_arrows": {
+      "level": "ignore"
+    },
+    "newlines_after_classes": {
+      "value": 3,
+      "level": "ignore"
+    },
+    "no_backticks": {
+      "level": "error"
+    },
+    "no_debugger": {
+      "level": "warn"
+    },
+    "no_empty_functions": {
+      "level": "ignore"
+    },
+    "no_empty_param_list": {
+      "level": "ignore"
+    },
+    "no_implicit_braces": {
+      "level": "ignore",
+      "strict": true
+    },
+    "no_implicit_parens": {
+      "strict": true,
+      "level": "ignore"
+    },
+    "no_interpolation_in_single_quotes": {
+      "level": "warn"
+    },
+    "no_plusplus": {
+      "level": "ignore"
+    },
+    "no_stand_alone_at": {
+      "level": "ignore"
+    },
+    "no_tabs": {
+      "level": "error"
+    },
+    "no_this": {
+      "level": "error"
+    },
+    "no_throwing_strings": {
+      "level": "error"
+    },
+    "no_trailing_semicolons": {
+      "level": "error"
+    },
+    "no_trailing_whitespace": {
+      "level": "error",
+      "allowed_in_comments": false,
+      "allowed_in_empty_lines": true
+    },
+    "no_unnecessary_double_quotes": {
+      "level": "warn"
+    },
+    "no_unnecessary_fat_arrows": {
+      "level": "warn"
+    },
+    "non_empty_constructor_needs_parens": {
+      "level": "ignore"
+    },
+    "prefer_english_operator": {
+      "level": "warn",
+      "doubleNotLevel": "ignore"
+    },
+    "space_operators": {
+      "level": "warn"
+    },
+    "spacing_after_comma": {
+      "level": "ignore"
+    },
+    "transform_messes_up_line_numbers": {
+      "level": "warn"
+    },
+    "check_scope": {
+      "module": "coffeescope2",
+      "level": "warn",
+      "environments": [
+        "node"
+      ],
+      "overwrite": true,
+      "shadow": false,
+      "shadow_builtins": false,
+      "shadow_exceptions": [
+        "callback",
+        "err",
+        "next"
+      ],
+      "undefined": false,
+      "hoist_local": true,
+      "hoist_parent": true,
+      "unused_variables": true,
+      "unused_arguments": false
+    },
+    "internal_variable_names_usage": {
+      "module": "coffeelint-internal-variable-names-usage",
+      "level": "warn"
+    },
+    "no_implicit_returns": {
+      "module": "coffeelint-no-implicit-returns"
+    }
+  }
+}
