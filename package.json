@@ -15,7 +15,7 @@
     "node": ">=4"
   },
   "dependencies": {
-    "async": "^1.x",
+    "async": "^2.x",
     "coffeelint": "^1.16.0",
     "coffeelint-stylish": "^0.1.2",
     "lodash": "^4.x",
