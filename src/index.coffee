@@ -156,6 +156,6 @@ module.exports = (input) ->
           emit: @emitWarning
         , callback
 
-    ], callback
+    ], (err) -> callback err
 
 #-----------------------------------------------------------------------------#
