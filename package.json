@@ -28,7 +28,7 @@
     "coffeescope2": "0.4.5"
   },
   "peerDependencies": {
-    "webpack": "2"
+    "webpack": "3"
   },
   "scripts": {
     "build": "coffee --bare -o lib/ -c src/",
