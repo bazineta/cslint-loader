@@ -15,13 +15,15 @@ utils       = require 'loader-utils'
 {getConfig} = require 'coffeelint/lib/configfinder'
 
 #-----------------------------------------------------------------------------#
-# Lint Error; don't capture the complete calling stack, as it's just noise.
+# Lint Error; bag the call stack, as it's just noise.
 #-----------------------------------------------------------------------------#
 
 class LintError extends Error
 
-  constructor: (@message) ->
-    @name = @constructor.name
+  constructor: (message) ->
+    super message
+    @name  = @constructor.name
+    @stack = false
 
 #-----------------------------------------------------------------------------#
 # Lint Type, used as a type-specific (error, warning) accumulator.
