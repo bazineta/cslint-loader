@@ -16,7 +16,7 @@
   },
   "dependencies": {
     "async": "^2.x",
-    "coffeelint": "^1.16.0",
+    "coffeelint": "^2.0.0",
     "coffeelint-stylish": "^0.1.2",
     "lodash": "^4.x",
     "loader-utils": "^1.1.0"
