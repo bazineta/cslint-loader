@@ -16,7 +16,7 @@
   },
   "dependencies": {
     "async": "^2.x",
-    "coffeelint": "^2.0.0",
+    "coffeelint": "^2.0.5",
     "coffeelint-stylish": "^0.1.2",
     "lodash": "^4.x",
     "loader-utils": "^1.1.0"
@@ -24,7 +24,7 @@
   "devDependencies": {
     "babel-core": "6.26.0",
     "babel-preset-env": "1.6.0",
-    "coffeelint-internal-variable-names-usage": "0.0.1",
+    "coffeelint-internal-variable-names-usage": "bazineta/coffeelint-internal-variable-names-usage",
     "coffeelint-no-implicit-returns": "bazineta/coffeelint-no-implicit-returns",
     "coffeescope2": "0.4.6",
     "coffeescript": "2.0.1"
