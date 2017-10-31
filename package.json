@@ -26,8 +26,8 @@
     "babel-preset-env": "1.6.0",
     "coffeelint-internal-variable-names-usage": "bazineta/coffeelint-internal-variable-names-usage",
     "coffeelint-no-implicit-returns": "bazineta/coffeelint-no-implicit-returns",
-    "coffeescope2": "0.4.6",
-    "coffeescript": "2.0.1"
+    "coffeescope2": "bazineta/coffeescope",
+    "coffeescript": "2.0.2"
   },
   "peerDependencies": {
     "webpack": "3"
