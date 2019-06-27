@@ -1,6 +1,6 @@
 {
   "name": "cslint-loader",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "author": "Allan Bazinet",
   "description": "CoffeeLint loader for webpack",
   "license": "MIT",
@@ -15,11 +15,9 @@
     "node": ">=4"
   },
   "dependencies": {
-    "async": "^2.x",
     "coffeelint": "2.1.0",
     "coffeelint-stylish": "^0.1.2",
-    "loader-utils": "^1.1.0",
-    "lodash": "^4.x"
+    "loader-utils": "^1.1.0"
   },
   "devDependencies": {
     "@babel/core": "7.4.5",
