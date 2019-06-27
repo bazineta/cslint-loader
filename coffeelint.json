@@ -153,10 +153,6 @@
     "unused_variables": true,
     "unused_arguments": false
   },
-  "internal_variable_names_usage": {
-    "module": "coffeelint-internal-variable-names-usage",
-    "level": "warn"
-  },
   "no_implicit_returns": {
     "module": "coffeelint-no-implicit-returns"
   }

@@ -1,6 +1,6 @@
 {
   "name": "cslint-loader",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "author": "Allan Bazinet",
   "description": "CoffeeLint loader for webpack",
   "license": "MIT",
@@ -22,12 +22,11 @@
     "lodash": "^4.x"
   },
   "devDependencies": {
-    "babel-core": "6.26.0",
-    "babel-preset-env": "1.6.1",
-    "coffeelint-internal-variable-names-usage": "bazineta/coffeelint-internal-variable-names-usage",
+    "@babel/core": "7.4.5",
+    "@babel/preset-env": "7.4.5",
     "coffeelint-no-implicit-returns": "bazineta/coffeelint-no-implicit-returns",
-    "coffeescope2": "0.5.0",
-    "coffeescript": "2.2.3"
+    "coffeescope2": "0.5.1",
+    "coffeescript": "2.4.1"
   },
   "peerDependencies": {
     "webpack": ">=2.0.0 <5.0.0"

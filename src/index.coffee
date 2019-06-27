@@ -8,8 +8,6 @@
 # Imports
 #-----------------------------------------------------------------------------#
 
-_           = require 'lodash'
-async       = require 'async'
 coffeelint  = require 'coffeelint'
 utils       = require 'loader-utils'
 {getConfig} = require 'coffeelint/lib/configfinder'
@@ -26,58 +24,59 @@ class LintError extends Error
     @stack = false
 
 #-----------------------------------------------------------------------------#
-# Lint Type, used as a type-specific (error, warning) accumulator.
+# Lint Type, used as a type-specific accumulator for errors and warnings.
 #-----------------------------------------------------------------------------#
 
 class LintType
 
-  constructor: ->
+  constructor: ({@fail, @emit}) ->
     @lines = []
 
   count: -> @lines.length
 
-  error: (error) ->
+  issue: (issue) ->
 
-    line  = "\nLine #{error.lineNumber}: #{error.message}"
-    line += ": #{error.context}" if error.context
+    line  = "\nLine #{issue.lineNumber}: #{issue.message}"
+    line += ": #{issue.context}" if issue.context
     
     @lines.push line
 
     return
 
-  check: ({fail, emit}, callback) ->
+  check: ->
 
-    # If we have issues, then create an error object describing them.
-    # If we are supposed to fail the build, then do so, otherwise just
-    # emit the error.
+    # If we have no issues, our work is done here.
 
-    if @count()
-      error = new LintError @lines.join()
-      return callback error if fail
-      emit error
+    return unless @count()
 
-    # We either didn't have any issues, or we had some, but were not
-    # instructed to fail the build due to them.
+    # We have issues; create an error object describing them.
 
-    return callback null
+    error = new LintError @lines.join()
+
+    # If we are supposed to fail the build, then do so by returning
+    # the error, otherwise just emit the error.
+
+    return error if @fail
+    @emit error
+    return
 
 #-----------------------------------------------------------------------------#
-# Lint; reduces an error report to summary data.
+# Reduce an error report to something easy to deal with.
 #-----------------------------------------------------------------------------#
 
-class Lint
+reduce = ({error, warn}) -> ({paths}) ->
 
-  constructor: (errorReport) ->
+  type =
+    error: new LintType error
+    warn:  new LintType warn
+        
+  for issues from Object.values paths
+    type[issue.level].issue issue for issue from issues
 
-    @type =
-      error: new LintType()
-      warn:  new LintType()
-
-    _.forEach errorReport.paths, (errors) =>
-      @type[error.level].error error for error in errors
-      return
-
-  count: -> _.sum _.invokeMap @type,  'count'
+  return {
+    issue:    type.error.count() or type.warn.count()
+    check: -> type.error.check() or type.warn.check()
+  }
 
 #-----------------------------------------------------------------------------#
 # Attempt to load a reporter of the type requested, which can be either a
@@ -89,7 +88,7 @@ class Lint
 
 loadReporter = (type) ->
 
-  return type if _.isFunction type
+  return type if typeof type is 'function'
 
   type ?= 'coffeelint-stylish'
 
@@ -120,44 +119,57 @@ normalize = (resourcePath) ->
 
   cwd = process.cwd() + '/'
 
-  return resourcePath.slice cwd.length if _.startsWith resourcePath, cwd
+  return resourcePath[cwd.length...] if resourcePath.startsWith cwd
   return resourcePath
 
 #-----------------------------------------------------------------------------#
 # Exports
 #-----------------------------------------------------------------------------#
 
-module.exports = (input) ->
+module.exports = (input, other...) ->
 
   resourcePath = normalize @resourcePath
   errorReport  = coffeelint.getErrorReport()
-  callback     = _.partialRight @async(), input
+  callback     = @async()
   options      = utils.getOptions @
+  config       = getConfig @context
+  lint         = reduce {
+    error:
+      fail: options.failOnError
+      emit: @emitError
+    warn:
+      fail: options.failOnWarning
+      emit: @emitWarning
+  }
 
-  return async.setImmediate =>
+  # Ideally, webpack wants us to be async, so hey, let's be async.
 
-    errorReport.lint resourcePath, input, getConfig @context
+  setImmediate ->
 
-    return callback null unless (lint = new Lint errorReport).count()
+    # Run the linter; results will be accumlated by CoffeeLint into the
+    # errorReport object.
 
-    report errorReport, options
+    errorReport.lint resourcePath, input, config
 
-    return async.parallel [
+    # From which, we really just want to know if there was any kind of
+    # issue, and, if there was, we need to check how to deal with them.
 
-      (callback) =>
+    {
+      issue
+      check
+    } = lint errorReport
 
-        return lint.type.error.check
-          fail: options.failOnError
-          emit: @emitError
-        , callback
+    # If there was some type of issue, then issue a report. If checking
+    # on the issue results in an error, then the issue is a fatal one.
 
-      (callback) =>
+    if issue
+      report errorReport, options
+      return callback err if (err = check())
 
-        return lint.type.warn.check
-          fail: options.failOnWarning
-          emit: @emitWarning
-        , callback
+    # We either didn't encounter an issue, or the issue was non-fatal.
 
-    ], (err) -> callback err
+    return callback null, input, other...
+
+  return
 
 #-----------------------------------------------------------------------------#
