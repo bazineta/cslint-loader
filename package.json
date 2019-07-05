@@ -17,11 +17,11 @@
   "dependencies": {
     "coffeelint": "2.1.0",
     "coffeelint-stylish": "^0.1.2",
-    "loader-utils": "^1.1.0"
+    "loader-utils": "^1.2.3"
   },
   "devDependencies": {
-    "@babel/core": "7.4.5",
-    "@babel/preset-env": "7.4.5",
+    "@babel/core": "7.5.0",
+    "@babel/preset-env": "7.5.0",
     "coffeelint-no-implicit-returns": "bazineta/coffeelint-no-implicit-returns",
     "coffeescope2": "0.5.1",
     "coffeescript": "2.4.1"
