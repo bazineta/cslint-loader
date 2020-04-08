@@ -8,9 +8,9 @@
 # Imports
 #-----------------------------------------------------------------------------#
 
-coffeelint  = require 'coffeelint'
+coffeelint  = require '@coffeelint/cli'
 utils       = require 'loader-utils'
-{getConfig} = require 'coffeelint/lib/configfinder'
+{getConfig} = require '@coffeelint/cli/lib/configfinder'
 
 #-----------------------------------------------------------------------------#
 # Lint Error; bag the call stack, as it's just noise.
